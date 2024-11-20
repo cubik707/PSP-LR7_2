@@ -2,6 +2,7 @@ package org.shop.model;
 
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -20,6 +21,9 @@ public class ShopOrder {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems;
 
     // Getters and Setters
     public Long getId() {
@@ -52,5 +56,13 @@ public class ShopOrder {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }
